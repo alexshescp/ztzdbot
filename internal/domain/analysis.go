@@ -15,31 +15,32 @@ type AnalysisResult struct {
 func AnalyzeIncident(input AnalysisInput) AnalysisResult {
 	t := strings.ToLower(input.Text)
 
-	if strings.Contains(t, "шифроваль") ||
-		strings.Contains(t, "ransom") ||
-		strings.Contains(t, "выкуп") ||
-		strings.Contains(t, ".lock") ||
-		strings.Contains(t, ".encrypted") {
-		return AnalysisResult{GuessedType: IncidentTypeRansomware, Confidence: 0.9}
+	serverKeywords := []string{
+		"сервер", "server", "cpu", "нагруз", "процесс", "xmrig", "майнер", "ssh", "rdp", "подключени",
+	}
+	websiteKeywords := []string{
+		"сайт", "redirect", "редирект", "wordpress", "joomla", "битрикс", "bitrix", "deface", "hacked", "домен", "url",
+	}
+	ransomwareKeywords := []string{
+		"шифроваль", "шифр", "ransom", "выкуп", ".lock", ".encrypted", "decrypt", "ransomware", "расшифров", "крипто",
 	}
 
-	if strings.Contains(t, "редирект") ||
-		strings.Contains(t, "redirect") ||
-		strings.Contains(t, "wordpress") ||
-		strings.Contains(t, "joomla") ||
-		strings.Contains(t, "битрикс") ||
-		strings.Contains(t, "bitrix") ||
-		strings.Contains(t, "hacked by") {
-		return AnalysisResult{GuessedType: IncidentTypeWebsite, Confidence: 0.8}
+	for _, kw := range ransomwareKeywords {
+		if strings.Contains(t, kw) {
+			return AnalysisResult{GuessedType: IncidentTypeRansomware, Confidence: 0.9}
+		}
 	}
 
-	if strings.Contains(t, "cpu") ||
-		strings.Contains(t, "нагруз") ||
-		strings.Contains(t, "процесс") ||
-		strings.Contains(t, "xmrig") ||
-		strings.Contains(t, "майнер") ||
-		strings.Contains(t, "ssh") {
-		return AnalysisResult{GuessedType: IncidentTypeServer, Confidence: 0.7}
+	for _, kw := range websiteKeywords {
+		if strings.Contains(t, kw) {
+			return AnalysisResult{GuessedType: IncidentTypeWebsite, Confidence: 0.8}
+		}
+	}
+
+	for _, kw := range serverKeywords {
+		if strings.Contains(t, kw) {
+			return AnalysisResult{GuessedType: IncidentTypeServer, Confidence: 0.7}
+		}
 	}
 
 	return AnalysisResult{GuessedType: IncidentTypeUnknown, Confidence: 0.3}
