@@ -1,5 +1,5 @@
 # Binaries
-bot
+/bot
 *.exe
 *.dll
 
@@ -10,7 +10,6 @@ build/
 
 # Go cache
 *.test
-go.sum
 
 # IDE
 .vscode/
