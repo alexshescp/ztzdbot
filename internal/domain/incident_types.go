@@ -4,8 +4,8 @@ package domain
 type IncidentType string
 
 const (
-	IncidentTypeServer      IncidentType = "server"
-	IncidentTypeWebsite     IncidentType = "website"
-	IncidentTypeRansomware  IncidentType = "ransomware"
-	IncidentTypeUnknown     IncidentType = "unknown"
+	IncidentTypeServer     IncidentType = "server"
+	IncidentTypeWebsite    IncidentType = "website"
+	IncidentTypeRansomware IncidentType = "ransomware"
+	IncidentTypeUnknown    IncidentType = "unknown"
 )
