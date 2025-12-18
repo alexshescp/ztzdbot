@@ -1,6 +1,8 @@
 // internal/bot/session/model.go
 package session
 
+import "t0t0dcyberbot/internal/domain"
+
 type Step int
 
 const (
@@ -10,19 +12,26 @@ const (
 	StepContact
 )
 
+type Flow string
+
+const (
+	FlowIncident  Flow = "incident"
+	FlowEmergency Flow = "emergency"
+)
+
 type Session struct {
-	ChatID        int64
-	Step          Step
-	IncidentType  string
-	IncidentText  string
-	ContactText   string
-	LastMessageID int
+	ChatID       int64
+	Flow         Flow
+	Step         Step
+	IncidentType domain.IncidentType
+	IncidentText string
+	ContactText  string
 }
 
 func (s *Session) Reset() {
+	s.Flow = ""
 	s.Step = StepIdle
-	s.IncidentType = ""
+	s.IncidentType = domain.IncidentTypeUnknown
 	s.IncidentText = ""
 	s.ContactText = ""
-	s.LastMessageID = 0
 }

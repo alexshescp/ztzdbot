@@ -1,7 +1,11 @@
 // internal/bot/session/store.go
 package session
 
-import "sync"
+import (
+	"sync"
+
+	"t0t0dcyberbot/internal/domain"
+)
 
 type Store struct {
 	mu       sync.RWMutex
@@ -23,8 +27,9 @@ func (s *Store) Get(chatID int64) *Session {
 	}
 
 	sess := &Session{
-		ChatID: chatID,
-		Step:   StepIdle,
+		ChatID:       chatID,
+		Step:         StepIdle,
+		IncidentType: domain.IncidentTypeUnknown,
 	}
 	s.sessions[chatID] = sess
 	return sess
