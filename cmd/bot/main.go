@@ -95,7 +95,7 @@ func (a *botApp) handleMessage(msg *tgbotapi.Message) {
 		sess.IncidentType = inferIncidentType(text)
 		sess.Flow = session.FlowIncident
 		sess.Step = session.StepIncidentDescription
-		a.sendMarkdown(chatID, a.messaging.FormatAskIncidentDescription(sess.IncidentType), nil)
+		a.sendMarkdown(chatID, a.messaging.FormatAskIncidentDescription(sess.IncidentType), incidentTypeKeyboard())
 	case session.StepIncidentDescription:
 		sess.IncidentText = text
 		if sess.IncidentType == domain.IncidentTypeUnknown {
@@ -123,20 +123,45 @@ func (a *botApp) handleCommand(sess *session.Session, chatID int64, text string)
 		sess.Reset()
 		a.sendMarkdown(chatID, a.messaging.FormatWelcome(), mainKeyboard())
 		return true
-	case "ℹ️ О боте":
+	case "ℹ️ О нас":
 		a.sendMarkdown(chatID, a.messaging.FormatAbout(), mainKeyboard())
 		return true
-	case "🧨 Сообщить об инциденте":
+	case "🚨 Экстренные действия при инциденте":
 		sess.Reset()
 		sess.Flow = session.FlowIncident
 		sess.Step = session.StepIncidentType
-		a.sendMarkdown(chatID, a.messaging.FormatIncidentStart(), mainKeyboard())
+		a.sendMarkdown(chatID, a.messaging.FormatIncidentStart(), incidentTypeKeyboard())
 		return true
-	case "🆘 Экстренная поддержка":
+	case "🆘 Срочная консультация":
 		sess.Reset()
 		sess.Flow = session.FlowEmergency
 		sess.Step = session.StepIncidentDescription
 		a.sendMarkdown(chatID, a.messaging.FormatEmergencyIntro(), mainKeyboard())
+		return true
+	case "🖥️ Сервер заражён":
+		sess.Reset()
+		sess.Flow = session.FlowIncident
+		sess.Step = session.StepIncidentDescription
+		sess.IncidentType = domain.IncidentTypeServer
+		a.sendMarkdown(chatID, a.messaging.FormatAskIncidentDescription(domain.IncidentTypeServer), incidentTypeKeyboard())
+		return true
+	case "🌐 Сайт взломан":
+		sess.Reset()
+		sess.Flow = session.FlowIncident
+		sess.Step = session.StepIncidentDescription
+		sess.IncidentType = domain.IncidentTypeWebsite
+		a.sendMarkdown(chatID, a.messaging.FormatAskIncidentDescription(domain.IncidentTypeWebsite), incidentTypeKeyboard())
+		return true
+	case "🔒 Шифровальщик / ransomware":
+		sess.Reset()
+		sess.Flow = session.FlowIncident
+		sess.Step = session.StepIncidentDescription
+		sess.IncidentType = domain.IncidentTypeRansomware
+		a.sendMarkdown(chatID, a.messaging.FormatAskIncidentDescription(domain.IncidentTypeRansomware), incidentTypeKeyboard())
+		return true
+	case "🏠 На главный экран":
+		sess.Reset()
+		a.sendMarkdown(chatID, a.messaging.FormatWelcome(), mainKeyboard())
 		return true
 	default:
 		return false
@@ -190,11 +215,26 @@ func (a *botApp) sendMarkdown(chatID int64, text string, markup interface{}) {
 func mainKeyboard() tgbotapi.ReplyKeyboardMarkup {
 	return tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
-			tgbotapi.NewKeyboardButton("🧨 Сообщить об инциденте"),
+			tgbotapi.NewKeyboardButton("🚨 Экстренные действия при инциденте"),
 		),
 		tgbotapi.NewKeyboardButtonRow(
-			tgbotapi.NewKeyboardButton("🆘 Экстренная поддержка"),
-			tgbotapi.NewKeyboardButton("ℹ️ О боте"),
+			tgbotapi.NewKeyboardButton("🆘 Срочная консультация"),
+			tgbotapi.NewKeyboardButton("ℹ️ О нас"),
+		),
+	)
+}
+
+func incidentTypeKeyboard() tgbotapi.ReplyKeyboardMarkup {
+	return tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("🖥️ Сервер заражён"),
+			tgbotapi.NewKeyboardButton("🌐 Сайт взломан"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("🔒 Шифровальщик / ransomware"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("🏠 На главный экран"),
 		),
 	)
 }

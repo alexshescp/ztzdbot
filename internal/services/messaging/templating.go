@@ -15,43 +15,40 @@ func NewService() *Service {
 
 func (s *Service) FormatWelcome() string {
 	var b strings.Builder
-	b.WriteString("*t0t0dcyberbot* — антикризисный кибербот по инцидентам безопасности 🚨\n\n")
+	b.WriteString("*0trust0day.com* — сервис информационной безопасности и готовности к кибератакам.\n")
+	b.WriteString("[0trust0day.com](https://0trust0day.com)\n\n")
+	b.WriteString("Услуги: информационная безопасность и повышение готовности к кибератакам, корпоративные учения и воркшопы, VIP поддержка.\n\n")
 	b.WriteString("Я помогу:\n")
-	b.WriteString("• быстро сориентироваться по типу инцидента (сервер, сайт, ransomware);\n")
-	b.WriteString("• дать понятный экстренный план в 5 шагов;\n")
-	b.WriteString("• аккуратно подготовить заявку для инженера 0t0d и в админский чат.\n\n")
+	b.WriteString("• подобрать экстренные действия при инциденте;\n")
+	b.WriteString("• собрать описание и контакт для инженера;\n")
+	b.WriteString("• подключить срочную консультацию.\n\n")
 	b.WriteString("Выберите действие на клавиатуре ниже:\n")
-	b.WriteString("• «🧨 Сообщить об инциденте» — если уже что-то случилось;\n")
-	b.WriteString("• «🆘 Экстренная поддержка» — если нужно срочно подключить инженера;\n")
-	b.WriteString("• «ℹ️ О боте» — чтобы понять, как мы работаем.\n")
+	b.WriteString("• «🚨 Экстренные действия при инциденте» — быстрые шаги и заявка инженеру;\n")
+	b.WriteString("• «🆘 Срочная консультация» — прямое подключение специалиста;\n")
+	b.WriteString("• «ℹ️ О нас» — подробнее о сервисе.\n")
 	return b.String()
 }
 
 func (s *Service) FormatAbout() string {
 	var b strings.Builder
-	b.WriteString("*О t0t0dcyberbot и команде 0t0d*\n\n")
-	b.WriteString("Мы занимаемся реагированием на инциденты:\n")
-	b.WriteString("• заражение серверов и инфраструктуры;\n")
-	b.WriteString("• взлом и дефейс сайтов, редиректы и фишинг;\n")
-	b.WriteString("• шифровальщики / ransomware и вымогательство.\n\n")
-	b.WriteString("Подход:\n")
-	b.WriteString("1. Быстро уточняем симптомы и тип инцидента.\n")
-	b.WriteString("2. Даём понятный экстренный план действий.\n")
-	b.WriteString("3. Помогаем собрать минимальный набор артефактов для расследования.\n")
-	b.WriteString("4. При необходимости подключаем инженера 0t0d для срочной диагностики.\n\n")
-	b.WriteString("Вы можете в любой момент нажать «🧨 Сообщить об инциденте» или «🆘 Экстренная поддержка» на клавиатуре.\n")
+	b.WriteString("*О нас — 0trust0day.com*\n\n")
+	b.WriteString("0trust0day.com помогает компаниям повышать готовность к кибератакам и реагировать на инциденты. Мы предлагаем:\n")
+	b.WriteString("• услуги информационной безопасности и повышение киберустойчивости;\n")
+	b.WriteString("• корпоративные учения и воркшопы;\n")
+	b.WriteString("• VIP поддержка и подключение инженеров при критических инцидентах.\n\n")
+	b.WriteString("В боте можно выбрать экстренные действия при инциденте, оставить описание и контакт или запросить срочную консультацию.\n")
 	return b.String()
 }
 
 func (s *Service) FormatIncidentStart() string {
 	var b strings.Builder
-	b.WriteString("*Сообщить об инциденте безопасности*\n\n")
-	b.WriteString("Для начала давайте определим, к какому типу ближе ситуация:\n\n")
+	b.WriteString("*Экстренные действия при инциденте*\n\n")
+	b.WriteString("Выберите тип инцидента на кнопках ниже или напишите свой вариант:\n\n")
 	b.WriteString("• *Сервер заражён* — странные процессы, высокая нагрузка, майнинг, неизвестные подключения;\n")
 	b.WriteString("• *Сайт взломан* — редиректы, «Hacked by ...», спам / фишинг, ломается верстка;\n")
 	b.WriteString("• *Ransomware* — файлы зашифрованы, появилось требование выкупа.\n\n")
 	b.WriteString(domain.UniversalFiveSteps())
-	b.WriteString("\nПосле выбора типа я попрошу описать ситуацию и оставить контакт — заявка уйдёт инженеру 0t0d и в админский чат.\n")
+	b.WriteString("\nПосле выбора типа я попрошу описать ситуацию и оставить контакт — заявка уйдёт инженеру 0t0d и в админский чат. Кнопка «🏠 На главный экран» вернёт в начало.\n")
 	return b.String()
 }
 
@@ -99,7 +96,7 @@ func (s *Service) FormatIncidentReceived(incidentType domain.IncidentType, incid
 
 func (s *Service) FormatEmergencyIntro() string {
 	var b strings.Builder
-	b.WriteString("*Экстренная поддержка 0t0d* 🆘\n\n")
+	b.WriteString("*Срочная консультация 0t0d* 🆘\n\n")
 	b.WriteString("Если ситуация критичная (простои, шифрование данных, массовые ошибки, требования выкупа) — давайте зафиксируем её сразу.\n\n")
 	b.WriteString("Сначала опишите, что произошло. После этого попрошу контакт, чтобы подключить инженера напрямую.\n")
 	return b.String()
@@ -109,7 +106,7 @@ func (s *Service) FormatEmergencyContactRequest(incidentType domain.IncidentType
 	short := domain.ShortTypeLabel(incidentType)
 
 	var b strings.Builder
-	b.WriteString("*Принял экстренное описание.*\n\n")
+	b.WriteString("*Принял описание для срочной консультации.*\n\n")
 	b.WriteString(fmt.Sprintf("Предварительный тип: _%s_.\n\n", short))
 	b.WriteString("Оставьте контакт для связи:\n")
 	b.WriteString("• Telegram @username,\n")
@@ -123,7 +120,7 @@ func (s *Service) FormatEmergencyReceived(incidentType domain.IncidentType, inci
 	short := domain.ShortTypeLabel(incidentType)
 
 	var b strings.Builder
-	b.WriteString("*Экстренная заявка принята и передана инженеру 0t0d.*\n\n")
+	b.WriteString("*Срочная консультация принята и передана инженеру 0t0d.*\n\n")
 	b.WriteString(fmt.Sprintf("Тип: _%s_.\n", short))
 	b.WriteString(fmt.Sprintf("Контакт: `%s`.\n\n", sanitizeInline(contact)))
 	b.WriteString("*Кратко по описанию:*\n")
@@ -137,7 +134,7 @@ func (s *Service) FormatAdminNotification(chatID int64, incidentType domain.Inci
 
 	var b strings.Builder
 	if emergency {
-		b.WriteString("*Новая заявка (экстренная)* 🆘\n\n")
+		b.WriteString("*Новая заявка (срочная консультация)* 🆘\n\n")
 	} else {
 		b.WriteString("*Новая заявка по инциденту* 🧨\n\n")
 	}
